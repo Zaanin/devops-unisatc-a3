@@ -1,0 +1,55 @@
+# Node modules
+node_modules/
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Build artifacts
+dist/
+build/
+.cache/
+
+# Strapi
+.tmp/
+.env
+.env.local
+.env.production
+.env.test
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Tests
+test-results/
+playwright-report/
+coverage/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.github/
+
+# Documentation
+*.md
+!README.md
+
+# Other
+.dockerignore
+Dockerfile
+docker-compose.yml
