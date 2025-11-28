@@ -1,0 +1,31 @@
+name: Deploy to Railway
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'deploy-*'
+
+jobs:
+  deploy:
+    name: Deploy to Railway
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+      
+      - name: Deploy to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway up --service strapi-cms
+      
+      - name: Get deployment URL
+        run: |
+          echo "### 🚀 Deploy no Railway Completo!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Acesse o dashboard Railway para ver a URL:" >> $GITHUB_STEP_SUMMARY
+          echo "https://railway.app/project" >> $GITHUB_STEP_SUMMARY
