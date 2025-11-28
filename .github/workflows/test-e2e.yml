@@ -46,6 +46,16 @@ jobs:
 
       # 7. Iniciar Strapi em background
       - name: Start Strapi
+        env:
+          HOST: 0.0.0.0
+          PORT: 1337
+          APP_KEYS: ImJMpHjnCdJw4ii7jZzCXQ==,Jg239VoMach6Fh2LAH6ydA==,LAdmPTwE8oqyVjAV4pCkBQ==,f1gPGngKmE5xhyDktSpCVw==
+          API_TOKEN_SALT: X2d0C6rgXwWgwEZCslZN0A==
+          ADMIN_JWT_SECRET: deEi8rGl7WB43uXiaYPaOg==
+          TRANSFER_TOKEN_SALT: vhsZEWfU3anLONbLZXZfqg==
+          JWT_SECRET: U2Nh9O8oDdw6gzXqWbg5Eg==
+          DATABASE_CLIENT: sqlite
+          DATABASE_FILENAME: .tmp/data.db
         run: |
           pnpm start &
           echo "Waiting for Strapi to start..."
