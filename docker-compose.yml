@@ -1,0 +1,31 @@
+# Docker Compose para desenvolvimento local
+version: '3.8'
+
+services:
+  strapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: strapi-cms:latest
+    container_name: strapi-dev
+    restart: unless-stopped
+    ports:
+      - "1337:1337"
+    environment:
+      - NODE_ENV=development
+      - HOST=0.0.0.0
+      - PORT=1337
+      - APP_KEYS=your-app-keys-here
+      - API_TOKEN_SALT=your-api-token-salt-here
+      - ADMIN_JWT_SECRET=your-admin-jwt-secret-here
+      - TRANSFER_TOKEN_SALT=your-transfer-token-salt-here
+      - JWT_SECRET=your-jwt-secret-here
+    volumes:
+      - ./.tmp:/app/.tmp
+      - ./public:/app/public
+    networks:
+      - strapi-network
+
+networks:
+  strapi-network:
+    driver: bridge
