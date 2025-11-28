@@ -1,6 +1,6 @@
 # Testes E2E - Strapi CMS
 
-Este projeto contém testes end-to-end para o Strapi CMS usando Playwright.
+Este projeto contém testes end-to-end para o Strapi CMS usando Playwright. Teste
 
 ## 📁 Estrutura de Testes
 
