@@ -19,7 +19,7 @@ test.describe('Testes que Falham Intencionalmente', () => {
   test.skip('exemplo de assertion incorreta', async ({ page }) => {
     await page.goto('http://localhost:1337');
     // Esta assertion está errada de propósito
-    await expect(page).toHaveTitle('Título que não existe');
+    await expect(page).toHaveTitle('Título que não existetese');
   });
 });
 
