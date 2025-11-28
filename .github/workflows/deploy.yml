@@ -1,0 +1,64 @@
+name: Deploy to AWS ECS
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - 'terraform/**'
+
+jobs:
+  terraform-deploy:
+    name: Terraform Deploy
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: terraform
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.0
+      
+      - name: Terraform Format Check
+        run: terraform fmt -check
+        continue-on-error: true
+      
+      - name: Terraform Init
+        run: terraform init
+      
+      - name: Terraform Validate
+        run: terraform validate
+      
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+        env:
+          TF_VAR_docker_image: ${{ secrets.DOCKER_USERNAME }}/strapi-cms:latest
+      
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/master'
+        run: terraform apply -auto-approve tfplan
+      
+      - name: Get ECS Service URL
+        if: github.ref == 'refs/heads/master'
+        run: |
+          LOAD_BALANCER_DNS=$(terraform output -raw load_balancer_dns 2>/dev/null || echo "not-available")
+          echo "### 🚀 Deploy Successful!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Application URL:** http://${LOAD_BALANCER_DNS}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**ECS Cluster:** strapi-cluster" >> $GITHUB_STEP_SUMMARY
+          echo "**ECS Service:** strapi-service" >> $GITHUB_STEP_SUMMARY
