@@ -34,7 +34,7 @@ jobs:
 
       # 4. Instalar dependências
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --no-frozen-lockfile
 
       # 5. Instalar browsers do Playwright
       - name: Install Playwright Browsers
