@@ -22,12 +22,3 @@ test.describe('Testes que Falham Intencionalmente', () => {
     await expect(page).toHaveTitle('Título que não existeteste');
   });
 });
-
-// INSTRUÇÕES PARA CRIAR PR COM ERRO:
-// 
-// 1. Crie uma branch: git checkout -b test/pr-com-erro
-// 2. Descomente um dos testes acima removendo o .skip
-// 3. Commit: git add . && git commit -m "test: adiciona teste que falha"
-// 4. Push: git push origin test/pr-com-erro
-// 5. Crie o PR no GitHub
-// 6. A pipeline vai falhar ❌
